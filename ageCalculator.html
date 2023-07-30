@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<link rel="icon" type="image/x-icon" href="C:\Users\bryan\OneDrive\Documents\qrComponent\favicon-32x32.png">
+<link rel="stylesheet" href="ageCalculator.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,700;1,400;1,800&display=swap" rel="stylesheet">
+<html>
+	<body>
+		<div class="fullContainer">
+			<div class="calcContainer">
+				<p class="day">Day:</p>
+				<p class="month">Month:</p>
+				<p class="year">Year:</p>
+				<form>
+					<input type="text" id="dayInput" size="3px">
+					<p id="day_error"></p>
+					<input type="text" id="monthInput" size="3px">
+					<p id="month_error"></p>
+					<input type="text" id="yearInput" size="3px">
+					<p id="year_error"></p>
+				</form>
+				<button id="calcButton">
+					<img src="file:///C:/Users/bryan/OneDrive/Documents/age%20calculator/icon-arrow.svg" class="inputIcon">
+				</button>
+			</div>	
+			<div class="resultContainer">
+				<h1 id="yearResult">0</h1>
+				<h1 class="yearIndicator">years</h1>
+				<h1 id="monthResult">0</h1>
+				<h1 class="monthIndicator">months</h1>
+				<h1 id="dayResult">0</h1>
+				<h1 class="dayIndicator">days</h1>
+			</div>
+		</div> 
+	</body>
+	<script type="text/javascript">
+		//constants declared to select output elements
+    const yearOutput = document.querySelector("#yearResult");
+    const monthOutput = document.querySelector("#monthResult");
+    const dayOutput = document.querySelector("#dayResult");
+    const submitBtn = document.querySelector("#calcButton");
+    //input elements
+    let isValid = false;
+    const yearInput = document.querySelector("#yearInput");
+    const monthInput = document.querySelector("#monthInput");
+    const dayInput = document.querySelector("#dayInput");
+    //error elements
+    const dayError = document.querySelector("#day_error");
+    const monthError = document.querySelector("#month_error");
+    const yearError= document.querySelector("#year_error");
+    	
+		dayInput.addEventListener("input", e => {
+    	if (dayInput.value > 31 ) {
+      	dayError.textContent = "Day must be valid";
+        isValid = false;
+        return;
+      } else {
+      	isValid = true;
+        dayError.textContent = "";
+      }
+      
+      if (dayInput.value <= 0) {
+      	isValid = false;
+        dayError.textContent = "Day must be valid";
+        return;
+      } else {
+        dayError.textContent = "";
+      }
+    });
+    
+    monthInput.addEventListener("input", e => {
+    	if (monthInput.value > 12 ) {
+      	monthError.textContent = "Month must be valid";
+        isValid = false;
+        return;
+      } else {
+      	isValid = true;
+        monthError.textContent = "";
+      }
+      
+      if (monthInput.value <= 0) {
+      	isValid = false;
+        monthError.textContent = "Month must be valid";
+        return;
+      } else {
+        monthError.textContent = "";
+      }
+    });
+    
+    yearInput.addEventListener("input", e => {
+    	if (yearInput.value > 2023) {
+      	yearError.textContent = "Year must be valid";
+        isValid = false;
+        return;
+      } else {
+      	isValid = true;
+        yearError.textContent = "";
+      }
+      
+      if (yearInput.value <= 1914) {
+      	isValid = false;
+        yearError.textContent = "Year must be valid";
+        return;
+      } else {
+        yearError.textContent = "";
+      }
+    });
+    
+    submitBtn.addEventListener ("click", CalculateDate);
+    
+    function CalculateDate() {
+    	if (isValid) {
+      	let birthDay = `${monthInput.value} / ${dayInput.value} / ${yearInput.value}`;
+        console.log(birthDay);
+        let bDayObj = new Date(birthDay);
+        let ageDif = Date.now() - bDayObj;
+        let ageDate = new Date(ageDif);
+        let ageYears = ageDate.getUTCFullYear() - 1970;
+        let ageMonth = ageDate.getUTCMonth();
+        let ageDay = ageDate.getUTCDay();
+        dayOutput.textContent = ageDay;
+        monthOutput.textContent = ageMonth;
+        yearOutput.textContent = ageYears;
+      } else {
+      	alert("error");
+      }
+    }
+	</script>
+</html>
